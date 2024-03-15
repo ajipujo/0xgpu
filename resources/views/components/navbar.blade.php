@@ -6,7 +6,28 @@
     </div>
     <div>
         <div class="flex space-x-3 items-center">
-            <button class="btn btn-primary text-white" onclick="web3Login()">Login with Metamask</button>
+            @guest
+                <button class="btn btn-primary" onclick="web3Login()">Login with Metamask</button>
+            @endguest
+            @auth
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn m-1">
+                        <div class="w-[32px] h-[32px] rounded-full object-cover overflow-hidden cursor-pointer">
+                            <img src="{{ asset('images/user-avatar.avif') }}" />
+                        </div>
+                    </div>
+                    <ul tabindex="0"
+                        class="dropdown-content border border-[#333c45] z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a>Profile</a></li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <li>
+                                <button type="submit" class="w-full">Logout</button>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+            @endauth
         </div>
     </div>
 </div>

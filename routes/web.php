@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\admin\AiCloud;
-use App\Http\Controllers\AiCloud as ControllersAiCloud;
+use App\Http\Controllers\admin\AiCloud as AdminAiCloud;
+use App\Http\Controllers\AiCloud;
 use App\Http\Controllers\Web3Login;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +22,11 @@ Route::get('/', function () {
 
 Route::get('/web3-login-message', [Web3Login::class, 'message']);
 Route::post('/web3-login-verify', [Web3Login::class, 'verify']);
+Route::post('/logout', [Web3Login::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->group(function () {
-    Route::resource('clouds', AiCloud::class);
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
+    Route::resource('/clouds', AdminAiCloud::class);
 });
 
-Route::get('/aiclouds', [ControllersAiCloud::class, 'index']);
+Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
+Route::get('/clouds/trx/:id', [AiCloud::class, 'index']);

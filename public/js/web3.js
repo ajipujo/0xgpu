@@ -26,5 +26,9 @@ async function web3Login() {
     });
     const data = await response.text();
 
-    console.log(data);
+    if (data === "OK") {
+        location.reload();
+    } else {
+        alert(data);
+    }
 }

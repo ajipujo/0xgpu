@@ -2,13 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Elliptic\EC;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use kornrunner\Keccak;
 
 class Web3Login
 {
+    public function generateRandomUsername($prefix = 'user', $suffixLength = 4) {
+        // Generate a random number
+        $randomNumber = mt_rand(1000, 9999);
+
+        // Generate a random suffix
+        $characters = 'abcdefghijklmnopqrstuvwxyz';
+        $randomSuffix = '';
+        for ($i = 0; $i < $suffixLength; $i++) {
+            $randomSuffix .= $characters[mt_rand(0, strlen($characters) - 1)];
+        }
+
+        // Combine prefix, random number, and suffix to create the username
+        $username = $prefix . $randomNumber . $randomSuffix;
+
+        return $username;
+    }
+
     public function message(): string
     {
         $nonce = Str::random();
@@ -21,9 +41,32 @@ class Web3Login
 
     public function verify(Request $request): string
     {
-        $result = $this->verifySignature(session()->pull('sign_message'), $request->input('signature'), $request->input('address'));
-        // If $result is true, perform additional logic like logging the user in, or by creating an account if one doesn't exist based on the Ethereum address
-        return ($result ? 'OK' : 'ERROR');
+        $sign_message = session()->pull('sign_message');
+        $signature = $request->input('signature');
+        $address = $request->input('address');
+
+        $result = $this->verifySignature($sign_message, $signature, $address);
+        if ($result) {
+            $name = $this->generateRandomUsername();
+            $curtime = date("Y-m-d H:i:s");
+
+            $user = User::firstOrCreate(['eth_address' => $address], [
+                'name' => $name,
+                'email' => $name . "@0xgpu.io",
+                'password' => Hash::make("12345678"),
+                'role' => 'Admin',
+                'email_verified_at' => $curtime,
+            ]);
+
+            Auth::login($user);
+
+            return ("OK");
+        } else {
+            return ("Invalid Signature");
+        }
+
+        // // If $result is true, perform additional logic like logging the user in, or by creating an account if one doesn't exist based on the Ethereum address
+        // return ($result ? 'OK' : 'ERROR');
     }
 
     protected function verifySignature(string $message, string $signature, string $address): bool
@@ -43,5 +86,13 @@ class Web3Login
         $derived_address = '0x' . substr(Keccak::hash(substr(hex2bin($pubkey->encode('hex')), 1), 256), 24);
 
         return (Str::lower($address) === $derived_address);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/clouds');
     }
 }

@@ -13,6 +13,7 @@
     @vite('resources/css/app.css')
 
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function csrfToken() {
             const csrf = document.querySelector('meta[name="_token"]').content;
@@ -22,6 +23,8 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
+
     <div class="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content">

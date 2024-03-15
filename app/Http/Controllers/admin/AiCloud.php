@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AiCloud extends Controller
 {
@@ -14,7 +16,11 @@ class AiCloud extends Controller
      */
     public function index()
     {
-        //
+        $title = 'AI Clouds';
+
+        $products = Product::paginate(12);
+
+        return view('pages.admin.clouds.index', compact('title', 'products'));
     }
 
     /**
@@ -24,7 +30,9 @@ class AiCloud extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Create AI Clouds';
+
+        return view('pages.admin.clouds.create', compact('title'));
     }
 
     /**
@@ -35,7 +43,25 @@ class AiCloud extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'provider' => 'required',
+            'location' => 'required',
+            'ram_capacity' => 'required',
+            'ram_bandwith' => 'required',
+            'cpu' => 'required',
+            'disk_name' => 'required',
+            'disk_bandwith' => 'required',
+            'disk_capacity' => 'required',
+            'price' => 'required',
+        ]);
+
+        $values = $request->all();
+
+        unset($values['_token']);
+        Product::create($values);
+        Alert::success('Hore!', 'Cloud Created Successfully');
+        return redirect('/admin/clouds');
     }
 
     /**
@@ -57,7 +83,10 @@ class AiCloud extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Update AI Cloud';
+        $product = Product::find($id);
+
+        return view('pages.admin.clouds.edit', compact('title', 'product'));
     }
 
     /**
@@ -69,7 +98,37 @@ class AiCloud extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'provider' => 'required',
+            'location' => 'required',
+            'ram_capacity' => 'required',
+            'ram_bandwith' => 'required',
+            'cpu' => 'required',
+            'disk_name' => 'required',
+            'disk_bandwith' => 'required',
+            'disk_capacity' => 'required',
+            'price' => 'required',
+        ]);
+
+        $values = $request->all();
+        $product = Product::find($id);
+
+        $product->name = $values['name'];
+        $product->provider = $values['provider'];
+        $product->location = $values['location'];
+        $product->ram_capacity = $values['ram_capacity'];
+        $product->ram_bandwith = $values['ram_bandwith'];
+        $product->cpu = $values['cpu'];
+        $product->disk_name = $values['disk_name'];
+        $product->disk_bandwith = $values['disk_bandwith'];
+        $product->disk_capacity = $values['disk_capacity'];
+        $product->price = $values['price'];
+
+        $product->save();
+
+        Alert::success('Hore!', 'Cloud updated Successfully');
+        return redirect('/admin/clouds');
     }
 
     /**
@@ -80,6 +139,10 @@ class AiCloud extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        Alert::success('Hore!', 'Cloud deleted Successfully');
+        return redirect('/admin/clouds');
     }
 }
