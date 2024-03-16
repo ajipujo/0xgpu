@@ -5,7 +5,7 @@
         <div class="mb-[16px]">
             <img src="{{ asset('images/logo.png') }}" alt="0xGPU" width="130px">
         </div>
-        @if (Auth::user() && Auth::user()->role)
+        @if (Auth::user() && Auth::user()->role == 'Admin')
             <li class="{{ Route::currentRouteName() == '/' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a>
                     <i class="fa-solid fa-house text-lg"></i>
@@ -26,22 +26,31 @@
                 </a>
             </li>
         @else
-            <li>
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.home' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.home') }}">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="ml-2">Home</span>
                 </a>
             </li>
-            <li>
-                <a>
-                    <i class="fa-solid fa-server text-lg"></i>
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['frontend.clouds', 'frontend.cloud']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.clouds') }}">
+                    <i class="fa-solid
+                fa-server text-lg"></i>
                     <span class="ml-2">AI Clouds</span>
                 </a>
             </li>
-            <li>
+            <li class="mb-2">
                 <a>
                     <i class="fa-solid fa-globe text-lg"></i>
                     <span class="ml-2">AI VPN</span>
+                </a>
+            </li>
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['transaction.index', 'transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('transaction.index') }}">
+                    <i class="fa-solid fa-credit-card text-lg"></i>
+                    <span class="ml-2">My Transactions</span>
                 </a>
             </li>
         @endif

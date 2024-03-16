@@ -14,19 +14,17 @@
                             <span class="text-sm text-[#606a74]">{{ $product->price }} ETH</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                            {{-- <a href="{{ route('clouds.edit', ['cloud' => $product->id]) }}" class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <form action="{{ route('clouds.destroy', ['cloud' => $product->id]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-error btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
+                            @if (Auth::user() && Auth::user()->role == 'Guest')
+                                <a href="{{ route('frontend.cloud', ['cloud' => $product->id]) }}"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </a>
+                            @endif
+                            @if (!Auth::user())
+                                <button class="btn btn-primary btn-sm" onclick="web3Login()">
+                                    <i class="fa-solid fa-cart-shopping"></i>
                                 </button>
-                            </form> --}}
+                            @endif
                         </div>
                     </div>
                     <div class="w-full divide-y divide-[#2f373f] mb-[20px]">

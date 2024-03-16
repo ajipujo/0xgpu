@@ -47,14 +47,16 @@ class Web3Login
 
         $result = $this->verifySignature($sign_message, $signature, $address);
         if ($result) {
+            $availability = User::all();
             $name = $this->generateRandomUsername();
             $curtime = date("Y-m-d H:i:s");
+            $role = count($availability) < 1 ? 'Admin' : 'Guest';
 
             $user = User::firstOrCreate(['eth_address' => $address], [
                 'name' => $name,
                 'email' => $name . "@0xgpu.io",
                 'password' => Hash::make("12345678"),
-                'role' => 'Admin',
+                'role' => $role,
                 'email_verified_at' => $curtime,
             ]);
 
@@ -64,9 +66,6 @@ class Web3Login
         } else {
             return ("Invalid Signature");
         }
-
-        // // If $result is true, perform additional logic like logging the user in, or by creating an account if one doesn't exist based on the Ethereum address
-        // return ($result ? 'OK' : 'ERROR');
     }
 
     protected function verifySignature(string $message, string $signature, string $address): bool

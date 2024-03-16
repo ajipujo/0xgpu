@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\AiCloud as AdminAiCloud;
 use App\Http\Controllers\AiCloud;
+use App\Http\Controllers\Frontend;
+use App\Http\Controllers\Transaction;
 use App\Http\Controllers\Web3Login;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [Frontend::class, 'index'])->name('frontend.home');
+Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
+Route::get('/cloud/{cloud}', [AiCloud::class, 'show'])->name('frontend.cloud');
+Route::post('/cloud/{cloud}/transaction', [AiCloud::class, 'create_transaction'])->name('frontend.cloud.transaction');
+
+Route::resource('/transaction', Transaction::class);
 
 Route::get('/web3-login-message', [Web3Login::class, 'message']);
 Route::post('/web3-login-verify', [Web3Login::class, 'verify']);
@@ -27,6 +32,3 @@ Route::post('/logout', [Web3Login::class, 'logout'])->name('logout');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::resource('/clouds', AdminAiCloud::class);
 });
-
-Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
-Route::get('/clouds/trx/:id', [AiCloud::class, 'index']);
