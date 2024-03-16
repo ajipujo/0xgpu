@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction as ModelsTransaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class Transaction extends Controller
@@ -17,7 +18,9 @@ class Transaction extends Controller
     {
         $title = 'My Transaction';
 
-        return view('pages.transaction.index', compact('title'));
+        $transactions = ModelsTransaction::where('user_id', Auth::user()->id)->paginate(10);
+
+        return view('pages.transaction.index', compact('title', 'transactions'));
     }
 
     /**

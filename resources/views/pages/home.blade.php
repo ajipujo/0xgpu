@@ -10,12 +10,12 @@
                     </div>
                     <div>
                         <div class="w-full font-bold text-[18px]">AI Cloud</div>
-                        <div class="text-[#606a74]">3 Items</div>
+                        <div class="text-[#606a74]">{{ $cloud_length }} Items</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
+        {{-- <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
             <div class="card-body">
                 <div class="w-full flex space-x-4">
                     <div>
@@ -27,6 +27,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

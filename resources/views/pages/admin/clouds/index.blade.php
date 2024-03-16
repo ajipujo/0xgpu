@@ -15,9 +15,6 @@
                             <span class="text-sm text-[#606a74]">{{ $product->price }} ETH</span>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
                             <a href="{{ route('clouds.edit', ['cloud' => $product->id]) }}" class="btn btn-primary btn-sm">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>

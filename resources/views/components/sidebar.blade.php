@@ -6,8 +6,8 @@
             <img src="{{ asset('images/logo.png') }}" alt="0xGPU" width="130px">
         </div>
         @if (Auth::user() && Auth::user()->role == 'Admin')
-            <li class="{{ Route::currentRouteName() == '/' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'dashboard.home' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('dashboard.home') }}">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="ml-2">Home</span>
                 </a>
@@ -19,8 +19,9 @@
                     <span class="ml-2">AI Clouds</span>
                 </a>
             </li>
-            <li class="{{ Route::currentRouteName() == 'transactions.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
-                <a>
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['dashboard.transactions', 'dashboard.transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('dashboard.transactions') }}">
                     <i class="fa-solid fa-credit-card text-lg"></i>
                     <span class="ml-2">Transactions</span>
                 </a>
@@ -40,19 +41,21 @@
                     <span class="ml-2">AI Clouds</span>
                 </a>
             </li>
-            <li class="mb-2">
+            {{-- <li class="mb-2">
                 <a>
                     <i class="fa-solid fa-globe text-lg"></i>
                     <span class="ml-2">AI VPN</span>
                 </a>
-            </li>
-            <li
-                class="{{ in_array(Route::currentRouteName(), ['transaction.index', 'transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
-                <a href="{{ route('transaction.index') }}">
-                    <i class="fa-solid fa-credit-card text-lg"></i>
-                    <span class="ml-2">My Transactions</span>
-                </a>
-            </li>
+            </li> --}}
+            @if (Auth::user() && Auth::user()->role == 'Guest')
+                <li
+                    class="{{ in_array(Route::currentRouteName(), ['transaction.index', 'transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                    <a href="{{ route('transaction.index') }}">
+                        <i class="fa-solid fa-credit-card text-lg"></i>
+                        <span class="ml-2">My Transactions</span>
+                    </a>
+                </li>
+            @endif
         @endif
     </ul>
 </div>

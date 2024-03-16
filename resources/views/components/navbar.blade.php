@@ -11,7 +11,8 @@
             @endguest
             @auth
                 <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="btn m-1">
+                    <div tabindex="0" role="button" class="btn m-1 space-x-1">
+                        <span>{{ Auth::user()->role }}</span>
                         <div class="w-[32px] h-[32px] rounded-full object-cover overflow-hidden cursor-pointer">
                             <img src="{{ asset('images/user-avatar.avif') }}" />
                         </div>

@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="w-full">
-        {{-- @if ($transaction->status == 'Process') --}}
         <div class="w-full flex justify-center">
             <div class="card card-compact w-full md:w-1/3 bg-base-100 border border-[#252C33] shadow-xl">
                 <div class="card-body">
@@ -35,6 +34,5 @@
                 </div>
             </div>
         </div>
-        {{-- @endif --}}
     </div>
 @endsection
