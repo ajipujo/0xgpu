@@ -25,13 +25,13 @@ Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
 Route::get('/cloud/{cloud}', [AiCloud::class, 'show'])->name('frontend.cloud');
 Route::post('/cloud/{cloud}/transaction', [AiCloud::class, 'create_transaction'])->name('frontend.cloud.transaction');
 
-Route::resource('/transaction', Transaction::class)->middleware('auth');
+Route::resource('/transaction', Transaction::class)->middleware('auth.guest');
 
 Route::get('/web3-login-message', [Web3Login::class, 'message']);
 Route::post('/web3-login-verify', [Web3Login::class, 'verify']);
 Route::post('/logout', [Web3Login::class, 'logout'])->name('logout');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function() {
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard.home');
 
     // Transactions - Admin
