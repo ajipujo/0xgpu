@@ -9,6 +9,7 @@
     <title>{{ $title . ' | ' ?? '' }} 0xGPU</title>
 
     <link rel="icon" href="{{ asset('images/favicon.png') }}">
+    <x-head.tinymce-config />
 
     @vite('resources/css/app.css')
 

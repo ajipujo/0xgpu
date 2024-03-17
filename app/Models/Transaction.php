@@ -16,6 +16,7 @@ class Transaction extends Model
         'product_type',
         'user_id',
         'status',
+        'notes'
     ];
 
     public function customer()

@@ -30,17 +30,32 @@ class Transaction extends Controller
         }
     }
 
-    public function accept($id) {
+    public function accept(Request $request, $id) {
+        $data = $request->all();
+
+        $content = $data['content'];
+        $content = trim($content);
+        $content = stripslashes($content);
+        $content = htmlspecialchars($content);
+
         $transaction = ModelsTransaction::find($id);
 
         $transaction->status = 'Completed';
+        $transaction->notes = $content;
         $transaction->save();
 
         Alert::success('Hore!', 'Transaction Accepted Successfully');
         return redirect('/admin/transactions');
     }
 
-    public function reject($id) {
+    public function reject(Request $request, $id) {
+        $data = $request->all();
+
+        $content = $data['content'];
+        $content = trim($content);
+        $content = stripslashes($content);
+        $content = htmlspecialchars($content);
+
         $transaction = ModelsTransaction::find($id);
 
         $transaction->status = 'Reject';

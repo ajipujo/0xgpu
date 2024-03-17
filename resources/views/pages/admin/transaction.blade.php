@@ -6,6 +6,42 @@
     </div>
     <div class="w-full space-y-4 mb-4">
         @foreach ($transactions as $transaction)
+            <dialog id="modal_accept_{{ $transaction->id }}" class="modal">
+                <div class="modal-box">
+                    <form action="{{ route('dashboard.transaction.accept', ['transaction' => $transaction->id]) }}"
+                        method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <h3 class="font-bold text-lg mb-5">Approve Order</h3>
+                        {{-- <p class="py-4">Press ESC key or click the button below to close</p> --}}
+                        <textarea name="content" id="richeditor"></textarea>
+                        <div class="modal-action">
+                            <div class="w-full flex justify-end space-x-2">
+                                <button class="btn">Close</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
+            <dialog id="modal_reject_{{ $transaction->id }}" class="modal">
+                <div class="modal-box">
+                    <form action="{{ route('dashboard.transaction.reject', ['transaction' => $transaction->id]) }}"
+                        method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <h3 class="font-bold text-lg mb-5">Reject Order</h3>
+                        {{-- <p class="py-4">Press ESC key or click the button below to close</p> --}}
+                        <textarea name="content" id="richeditor"></textarea>
+                        <div class="modal-action">
+                            <div class="w-full flex justify-end space-x-2">
+                                <button class="btn">Close</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
             <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
                 <div class="card-body">
                     <div class="w-full flex justify-between items-center">
@@ -37,24 +73,14 @@
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                             @if ($transaction->status == 'Paid')
-                                <form
-                                    action="{{ route('dashboard.transaction.accept', ['transaction' => $transaction->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </button>
-                                </form>
-                                <form
-                                    action="{{ route('dashboard.transaction.reject', ['transaction' => $transaction->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button class="btn btn-error btn-sm">
-                                        <i class="fa-solid fa-ban"></i>
-                                    </button>
-                                </form>
+                                <button onclick="modal_accept_{{ $transaction->id }}.showModal()" type="button"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                                <button onclick="modal_reject_{{ $transaction->id }}.showModal()"
+                                    class="btn btn-error btn-sm">
+                                    <i class="fa-solid fa-ban"></i>
+                                </button>
                             @endif
                         </div>
                     </div>

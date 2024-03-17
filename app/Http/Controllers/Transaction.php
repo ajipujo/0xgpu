@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Transaction as ModelsTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,7 @@ class Transaction extends Controller
     public function show($id)
     {
         $transaction = ModelsTransaction::find($id);
+        $product = null;
 
         if ($transaction->status == 'Process') {
             $title = 'Payment';
@@ -60,7 +62,11 @@ class Transaction extends Controller
             $title = 'Transaction';
         }
 
-        return view('pages.transaction.show', compact('title', 'transaction'));
+        if ($transaction->product_type == 'Cloud') {
+            $product = Product::find($transaction->product_id);
+        }
+
+        return view('pages.transaction.show', compact('title', 'transaction', 'product'));
     }
 
     /**
