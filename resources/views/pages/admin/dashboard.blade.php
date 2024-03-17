@@ -10,7 +10,7 @@
                     </div>
                     <div>
                         <div class="w-full font-bold text-[18px]">User Active</div>
-                        <div class="text-[#606a74]">3 Person</div>
+                        <div class="text-[#606a74]">{{ $users }} Person</div>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <div class="w-full font-bold text-[18px]">Transactions</div>
-                        <div class="text-[#606a74]">3 Items</div>
+                        <div class="text-[#606a74]">{{ $transactions }} Items</div>
                     </div>
                 </div>
             </div>
