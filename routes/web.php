@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\Transaction as AdminTransaction;
 use App\Http\Controllers\admin\Dashboard;
 use App\Http\Controllers\AiCloud;
 use App\Http\Controllers\Frontend;
+use App\Http\Controllers\Playground;
 use App\Http\Controllers\Transaction;
 use App\Http\Controllers\Web3Login;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function() {
     // Transactions - Cloud
     Route::resource('/clouds', AdminAiCloud::class);
 });
+
+Route::get('/migrate-clouds', [Playground::class, 'import_clouds']);
