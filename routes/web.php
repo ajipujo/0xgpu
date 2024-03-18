@@ -45,4 +45,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function() {
     Route::resource('/clouds', AdminAiCloud::class);
 });
 
-Route::get('/migrate-clouds', [Playground::class, 'import_clouds']);
+// Route::get('/migrate-clouds', [Playground::class, 'import_clouds']);
