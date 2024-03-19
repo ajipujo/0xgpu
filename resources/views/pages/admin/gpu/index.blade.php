@@ -51,4 +51,5 @@
             </div>
         @endforeach
     </div>
+    {{ $gpus->links() }}
 @endsection

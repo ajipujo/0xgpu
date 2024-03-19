@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cpu as ModelsCpu;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Cpu extends Controller
 {
@@ -14,7 +16,11 @@ class Cpu extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Virtual CPU';
+
+        $cpus = ModelsCpu::paginate(10);
+
+        return view('pages.admin.cpu.index', compact('title', 'cpus'));
     }
 
     /**
@@ -24,7 +30,9 @@ class Cpu extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Create CPU';
+
+        return view('pages.admin.cpu.create', compact('title'));
     }
 
     /**
@@ -35,7 +43,16 @@ class Cpu extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        unset($values['_token']);
+        ModelsCpu::create($values);
+        Alert::success('Hore!', 'vCPU Created Successfully');
+        return redirect('/admin/cpu');
     }
 
     /**
@@ -57,7 +74,11 @@ class Cpu extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Update CPU';
+
+        $cpu = ModelsCpu::find($id);
+
+        return view('pages.admin.cpu.edit', compact('title', 'cpu'));
     }
 
     /**
@@ -69,7 +90,20 @@ class Cpu extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        $cpu = ModelsCpu::find($id);
+
+        $cpu->datacenter = $values['datacenter'];
+        $cpu->cost_per_hour = $values['cost_per_hour'];
+        $cpu->save();
+
+        Alert::success('Hore!', 'CPU updated Successfully');
+        return redirect('/admin/cpu');
     }
 
     /**
@@ -80,6 +114,10 @@ class Cpu extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gpu = ModelsCpu::find($id);
+        $gpu->delete();
+
+        Alert::success('Hore!', 'CPU deleted Successfully');
+        return redirect('/admin/cpu');
     }
 }

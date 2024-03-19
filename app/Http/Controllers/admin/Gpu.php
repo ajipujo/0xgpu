@@ -43,7 +43,7 @@ class Gpu extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required',
             'memory_capacity' => 'required',
             'memory_type' => 'required',
