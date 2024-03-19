@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('memory_capacity');
             $table->string('memory_type');
-            $table->string('badnwith');
+            $table->string('bandwith');
             $table->string('form_factor');
             $table->string('max_cpu_per_gpu');
             $table->string('max_memory_per_gpu');

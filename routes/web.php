@@ -1,11 +1,17 @@
 <?php
 
 use App\Http\Controllers\admin\AiCloud as AdminAiCloud;
+use App\Http\Controllers\admin\Cpu;
 use App\Http\Controllers\admin\Transaction as AdminTransaction;
 use App\Http\Controllers\admin\Dashboard;
+use App\Http\Controllers\admin\Gpu;
+use App\Http\Controllers\admin\Ipv4;
+use App\Http\Controllers\admin\Memory;
+use App\Http\Controllers\admin\Storage;
+use App\Http\Controllers\admin\Vpc;
 use App\Http\Controllers\AiCloud;
 use App\Http\Controllers\Frontend;
-use App\Http\Controllers\Playground;
+// use App\Http\Controllers\Playground;
 use App\Http\Controllers\Transaction;
 use App\Http\Controllers\Web3Login;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +46,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function() {
     Route::get('/transaction/{transaction}', [AdminTransaction::class, 'show'])->name('dashboard.transaction.show');
     Route::patch('/transaction/{transaction}/accept', [AdminTransaction::class, 'accept'])->name('dashboard.transaction.accept');
     Route::patch('/transaction/{transaction}/reject', [AdminTransaction::class, 'reject'])->name('dashboard.transaction.reject');
+
+    Route::resource('/gpu', Gpu::class);
+    Route::resource('/cpu', Cpu::class);
+    Route::resource('/memory', Memory::class);
+    Route::resource('/storage', Storage::class);
+    Route::resource('/ipv4', Ipv4::class);
+    Route::resource('/vpc', Vpc::class);
 
     // Transactions - Cloud
     Route::resource('/clouds', AdminAiCloud::class);

@@ -12,11 +12,47 @@
                     <span class="ml-2">Home</span>
                 </a>
             </li>
-            <li
+            {{-- <li
                 class="{{ in_array(Route::currentRouteName(), ['clouds.index', 'clouds.create', 'clouds.edit']) == 'clouds.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('clouds.index') }}">
                     <i class="fa-solid fa-server text-lg"></i>
                     <span class="ml-2">AI Clouds</span>
+                </a>
+            </li> --}}
+            <li class="mb-2">
+                <a href="{{ route('gpu.index') }}">
+                    <i class="fa-solid fa-hard-drive text-lg"></i>
+                    <span class="ml-2">GPU's</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ route('cpu.index') }}">
+                    <i class="fa-solid fa-microchip text-lg"></i>
+                    <span class="ml-2">Virtual CPU's</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ route('memory.index') }}">
+                    <i class="fa-solid fa-memory text-lg"></i>
+                    <span class="ml-2">Memory</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ route('storage.index') }}">
+                    <i class="fa-solid fa-database text-lg"></i>
+                    <span class="ml-2">Storage Disks</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ route('vpc.index') }}">
+                    <i class="fa-solid fa-globe text-lg"></i>
+                    <span class="ml-2">Private networks (VPC)</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{ route('ipv4.index') }}">
+                    <i class="fa-solid fa-circle-nodes text-lg"></i>
+                    <span class="ml-2">IPv4 addresses</span>
                 </a>
             </li>
             <li
@@ -41,12 +77,6 @@
                     <span class="ml-2">AI Clouds</span>
                 </a>
             </li>
-            {{-- <li class="mb-2">
-                <a>
-                    <i class="fa-solid fa-globe text-lg"></i>
-                    <span class="ml-2">AI VPN</span>
-                </a>
-            </li> --}}
             @if (Auth::user() && Auth::user()->role == 'Guest')
                 <li
                     class="{{ in_array(Route::currentRouteName(), ['transaction.index', 'transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
