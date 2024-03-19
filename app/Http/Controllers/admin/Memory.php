@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Memory as ModelsMemory;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Memory extends Controller
 {
@@ -14,7 +16,11 @@ class Memory extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Memory';
+
+        $memories = ModelsMemory::paginate(10);
+
+        return view('pages.admin.memory.index', compact('title', 'memories'));
     }
 
     /**
@@ -24,7 +30,9 @@ class Memory extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Create Memory';
+
+        return view('pages.admin.memory.create', compact('title'));
     }
 
     /**
@@ -35,7 +43,16 @@ class Memory extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        unset($values['_token']);
+        ModelsMemory::create($values);
+        Alert::success('Hore!', 'Memory Created Successfully');
+        return redirect('/admin/memory');
     }
 
     /**
@@ -57,7 +74,11 @@ class Memory extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Update Memory';
+
+        $memory = ModelsMemory::find($id);
+
+        return view('pages.admin.memory.edit', compact('title', 'memory'));
     }
 
     /**
@@ -69,7 +90,20 @@ class Memory extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        $memory = ModelsMemory::find($id);
+
+        $memory->datacenter = $values['datacenter'];
+        $memory->cost_per_hour = $values['cost_per_hour'];
+        $memory->save();
+
+        Alert::success('Hore!', 'Memory updated Successfully');
+        return redirect('/admin/memory');
     }
 
     /**
@@ -80,6 +114,10 @@ class Memory extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gpu = ModelsMemory::find($id);
+        $gpu->delete();
+
+        Alert::success('Hore!', 'Memory deleted Successfully');
+        return redirect('/admin/memory');
     }
 }
