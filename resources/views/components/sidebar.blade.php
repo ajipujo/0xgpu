@@ -19,37 +19,43 @@
                     <span class="ml-2">AI Clouds</span>
                 </a>
             </li> --}}
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['gpu.index', 'gpu.create', 'gpu.edit']) == 'gpu.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('gpu.index') }}">
                     <i class="fa-solid fa-hard-drive text-lg"></i>
                     <span class="ml-2">GPU's</span>
                 </a>
             </li>
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['cpu.index', 'cpu.create', 'cpu.edit']) == 'cpu.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('cpu.index') }}">
                     <i class="fa-solid fa-microchip text-lg"></i>
                     <span class="ml-2">Virtual CPU's</span>
                 </a>
             </li>
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['memory.index', 'memory.create', 'memory.edit']) == 'memory.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('memory.index') }}">
                     <i class="fa-solid fa-memory text-lg"></i>
                     <span class="ml-2">Memory</span>
                 </a>
             </li>
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['storage.index', 'storage.create', 'storage.edit']) == 'storage.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('storage.index') }}">
                     <i class="fa-solid fa-database text-lg"></i>
                     <span class="ml-2">Storage Disks</span>
                 </a>
             </li>
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['vpc.index', 'vpc.create', 'vpc.edit']) == 'vpc.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('vpc.index') }}">
                     <i class="fa-solid fa-globe text-lg"></i>
                     <span class="ml-2">Private networks (VPC)</span>
                 </a>
             </li>
-            <li class="mb-2">
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['ipv4.index', 'ipv4.create', 'ipv4.edit']) == 'ipv4.index' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('ipv4.index') }}">
                     <i class="fa-solid fa-circle-nodes text-lg"></i>
                     <span class="ml-2">IPv4 addresses</span>
@@ -69,14 +75,14 @@
                     <span class="ml-2">Home</span>
                 </a>
             </li>
-            <li
+            {{-- <li
                 class="{{ in_array(Route::currentRouteName(), ['frontend.clouds', 'frontend.cloud']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('frontend.clouds') }}">
                     <i class="fa-solid
                 fa-server text-lg"></i>
                     <span class="ml-2">AI Clouds</span>
                 </a>
-            </li>
+            </li> --}}
             @if (Auth::user() && Auth::user()->role == 'Guest')
                 <li
                     class="{{ in_array(Route::currentRouteName(), ['transaction.index', 'transaction.show']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
