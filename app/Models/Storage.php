@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Storage extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'datacenter',
+        'cost_per_gb_hour',
+    ];
 }

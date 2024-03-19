@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Storage as ModelsStorage;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Storage extends Controller
 {
@@ -14,7 +16,11 @@ class Storage extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Storage';
+
+        $storages = ModelsStorage::paginate(10);
+
+        return view('pages.admin.storage.index', compact('title', 'storages'));
     }
 
     /**
@@ -24,7 +30,9 @@ class Storage extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Create Storage';
+
+        return view('pages.admin.storage.create', compact('title'));
     }
 
     /**
@@ -35,7 +43,17 @@ class Storage extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_gb_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+
+        unset($values['_token']);
+        ModelsStorage::create($values);
+        Alert::success('Hore!', 'Storage Created Successfully');
+        return redirect('/admin/storage');
     }
 
     /**
@@ -57,7 +75,11 @@ class Storage extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Update Storage';
+
+        $storage = ModelsStorage::find($id);
+
+        return view('pages.admin.storage.edit', compact('title', 'storage'));
     }
 
     /**
@@ -69,7 +91,20 @@ class Storage extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_gb_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        $storage = ModelsStorage::find($id);
+
+        $storage->datacenter = $values['datacenter'];
+        $storage->cost_per_gb_hour = $values['cost_per_gb_hour'];
+        $storage->save();
+
+        Alert::success('Hore!', 'Storage updated Successfully');
+        return redirect('/admin/storage');
     }
 
     /**
@@ -80,6 +115,10 @@ class Storage extends Controller
      */
     public function destroy($id)
     {
-        //
+        $storage = ModelsStorage::find($id);
+        $storage->delete();
+
+        Alert::success('Hore!', 'Storage deleted Successfully');
+        return redirect('/admin/storage');
     }
 }
