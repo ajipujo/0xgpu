@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vpc as ModelsVpc;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Vpc extends Controller
 {
@@ -14,7 +16,11 @@ class Vpc extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Private networks (VPC)';
+
+        $vpcs = ModelsVpc::paginate(10);
+
+        return view('pages.admin.vpc.index', compact('title', 'vpcs'));
     }
 
     /**
@@ -24,7 +30,9 @@ class Vpc extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Create VPC';
+
+        return view('pages.admin.vpc.create', compact('title'));
     }
 
     /**
@@ -35,7 +43,16 @@ class Vpc extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        unset($values['_token']);
+        ModelsVpc::create($values);
+        Alert::success('Hore!', 'VPC Created Successfully');
+        return redirect('/admin/vpc');
     }
 
     /**
@@ -57,7 +74,11 @@ class Vpc extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Update VPC';
+
+        $vpc = ModelsVpc::find($id);
+
+        return view('pages.admin.vpc.edit', compact('title', 'vpc'));
     }
 
     /**
@@ -69,7 +90,20 @@ class Vpc extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'datacenter' => 'required',
+            'cost_per_hour' => 'required',
+        ]);
+
+        $values = $request->all();
+        $vpc = ModelsVpc::find($id);
+
+        $vpc->datacenter = $values['datacenter'];
+        $vpc->cost_per_hour = $values['cost_per_hour'];
+        $vpc->save();
+
+        Alert::success('Hore!', 'VPC updated Successfully');
+        return redirect('/admin/vpc');
     }
 
     /**
@@ -80,6 +114,10 @@ class Vpc extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gpu = ModelsVpc::find($id);
+        $gpu->delete();
+
+        Alert::success('Hore!', 'VPC deleted Successfully');
+        return redirect('/admin/vpc');
     }
 }
