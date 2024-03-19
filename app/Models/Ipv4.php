@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ipv4 extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'datacenter',
+        'cost_per_hour',
+    ];
 }
