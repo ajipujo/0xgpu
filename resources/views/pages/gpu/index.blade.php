@@ -37,6 +37,7 @@
                             <div class="font-semibold">{{ $gpu->price_per_hour }} ETH</div>
                         </div>
                         <div>
+                            @if (Auth::user() && Auth::user()->role == 'Guest')
                             <form action="{{ route('transaction.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $gpu->id }}">
@@ -45,6 +46,12 @@
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </button>
                             </form>
+                            @endif
+                            @if (!Auth::user())
+                                <button class="btn btn-primary btn-sm" onclick="web3Login()">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -92,6 +92,6 @@ class Web3Login
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/clouds');
+        return redirect('/');
     }
 }
