@@ -62,7 +62,7 @@ class Web3Login
 
             Auth::login($user);
 
-            return ("OK");
+            return ($user->role);
         } else {
             return ("Invalid Signature");
         }

@@ -8,7 +8,7 @@
         @foreach ($transactions as $transaction)
             <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
                 <div class="card-body">
-                    <div class="w-full flex justify-between items-center">
+                    <div class="w-full grid grid-cols-4">
                         <div>
                             <div class="text-xl font-semibold mb-1">{{ $transaction->product_name }}</div>
                             <div class="text-[#606a74]">{{ $transaction->product_price }} ETH</div>
@@ -25,13 +25,25 @@
                                 <span>{{ $transaction->created_at }}</span>
                             </div>
                         </div>
-                        <div>
-                            Status:
-                            <div class="badge badge-primary">
-                                {{ $transaction->status }}
-                            </div>
+                        <div class="flex justify-start items-center space-x-2">
+                            <span>Status:</span>
+                            @if ($transaction->status == 'Process' || $transaction->status == 'Paid')
+                                <div class="badge badge-primary">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
+                            @if ($transaction->status == 'Completed')
+                                <div class="badge badge-success">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
+                            @if ($transaction->status == 'Reject')
+                                <div class="badge badge-error">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
                         </div>
-                        <div class="space-x-1">
+                        <div class="space-x-2 flex justify-end items-center">
                             @if ($transaction->status == 'Completed')
                                 <dialog id="order_notes_{{ $transaction->id }}" class="modal">
                                     <div class="modal-box">

@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cpu;
+use App\Models\Gpu;
+use App\Models\Ipv4;
+use App\Models\Memory;
 use App\Models\Product;
+use App\Models\Storage;
 use App\Models\Transaction as ModelsTransaction;
+use App\Models\Vpc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -42,7 +48,66 @@ class Transaction extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id' => 'required',
+            'product_type' => 'required'
+        ]);
+
+        $values = $request->all();
+        $user_id = Auth::user()->id;
+
+        switch ($values['product_type']) {
+            case 'GPU':
+                $product = Gpu::find($values['product_id']);
+                $product_name = $product['name'];
+                $product_price = $product['cost_per_hour'];
+                break;
+            case 'CPU':
+                $product = Cpu::find($values['product_id']);
+                $product_name = $product['datacenter'];
+                $product_price = $product['cost_per_hour'];
+                break;
+            case 'MEMORY':
+                $product = Memory::find($values['product_id']);
+                $product_name = $product['datacenter'];
+                $product_price = $product['cost_per_hour'];
+                break;
+            case 'STORAGE':
+                $product = Storage::find($values['product_id']);
+                $product_name = $product['datacenter'];
+                $product_price = $product['cost_per_gb_hour'];
+                break;
+            case 'VPC':
+                $product = Vpc::find($values['product_id']);
+                $product_name = $product['datacenter'];
+                $product_price = $product['cost_per_hour'];
+                break;
+            case 'IPV4':
+                $product = Ipv4::find($values['product_id']);
+                $product_name = $product['datacenter'];
+                $product_price = $product['cost_per_hour'];
+                break;
+
+            default:
+                $product = null;
+                break;
+        }
+
+        if ($product) {
+            $transaction = ModelsTransaction::create([
+                'product_id' => $product->id,
+                'product_name' => $product_name,
+                'product_price' => $product_price,
+                'product_type' => $values['product_type'],
+                'user_id' => $user_id,
+                'status' => 'Process'
+            ]);
+
+            $callback = '/transaction/' . $transaction['id'];
+
+            Alert::success('Hore!', 'Transaction Created Successfully');
+            return redirect($callback);
+        }
     }
 
     /**
@@ -58,15 +123,27 @@ class Transaction extends Controller
 
         if ($transaction->status == 'Process') {
             $title = 'Payment';
+
+            return view('pages.transaction.show', compact('title', 'transaction'));
         } else {
             $title = 'Transaction';
-        }
 
-        if ($transaction->product_type == 'Cloud') {
-            $product = Product::find($transaction->product_id);
-        }
+            if ($transaction->product_type == "GPU") {
+                $product = Gpu::find($transaction->product_id);
+            } elseif ($transaction->product_type == "CPU") {
+                $product = Cpu::find($transaction->product_id);
+            } elseif ($transaction->product_type == "MEMORY") {
+                $product = Memory::find($transaction->product_id);
+            } elseif ($transaction->product_type == "STORAGE") {
+                $product = Storage::find($transaction->product_id);
+            } elseif ($transaction->product_type == "VPC") {
+                $product = Vpc::find($transaction->product_id);
+            } elseif ($transaction->product_type == "IPV4") {
+                $product = Ipv4::find($transaction->product_id);
+            }
 
-        return view('pages.transaction.show', compact('title', 'transaction', 'product'));
+            return view('pages.transaction.show', compact('title', 'transaction', 'product'));
+        }
     }
 
     /**

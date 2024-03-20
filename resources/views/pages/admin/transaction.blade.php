@@ -13,7 +13,6 @@
                         @csrf
                         @method('PATCH')
                         <h3 class="font-bold text-lg mb-5">Approve Order</h3>
-                        {{-- <p class="py-4">Press ESC key or click the button below to close</p> --}}
                         <textarea name="content" id="richeditor"></textarea>
                         <div class="modal-action">
                             <div class="w-full flex justify-end space-x-2">
@@ -44,7 +43,7 @@
             </dialog>
             <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
                 <div class="card-body">
-                    <div class="w-full flex justify-between items-center">
+                    <div class="w-full grid grid-cols-4">
                         <div>
                             <div class="text-xl font-semibold mb-1">{{ $transaction->product_name }}</div>
                             <div class="text-[#606a74]">{{ $transaction->product_price }} ETH</div>
@@ -61,13 +60,25 @@
                                 <span>{{ $transaction->created_at }}</span>
                             </div>
                         </div>
-                        <div>
-                            Status:
-                            <div class="badge badge-primary">
-                                {{ $transaction->status }}
-                            </div>
+                        <div class="flex justify-start items-center space-x-2 pl-8">
+                            <span>Status:</span>
+                            @if ($transaction->status == 'Process' || $transaction->status == 'Paid')
+                                <div class="badge badge-primary">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
+                            @if ($transaction->status == 'Completed')
+                                <div class="badge badge-success">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
+                            @if ($transaction->status == 'Reject')
+                                <div class="badge badge-error">
+                                    {{ $transaction->status }}
+                                </div>
+                            @endif
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-2 items-center justify-end">
                             <a href="{{ route('dashboard.transaction.show', ['transaction' => $transaction->id]) }}"
                                 class="btn btn-primary btn-sm">
                                 <i class="fa-solid fa-eye"></i>

@@ -21,9 +21,14 @@
                             <div class="font-semibold">{{ $storage->cost_per_gb_hour }} ETH</div>
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
+                            <form action="{{ route('transaction.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $storage->id }}">
+                                <input type="hidden" name="product_type" value="STORAGE">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

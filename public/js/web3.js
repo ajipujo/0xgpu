@@ -26,8 +26,10 @@ async function web3Login() {
     });
     const data = await response.text();
 
-    if (data === "OK") {
+    if (data == "Guest") {
         location.reload();
+    } else if (data == "Admin") {
+        window.location.href = "/admin";
     } else {
         alert(data);
     }
