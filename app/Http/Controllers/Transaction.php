@@ -60,32 +60,32 @@ class Transaction extends Controller
             case 'GPU':
                 $product = Gpu::find($values['product_id']);
                 $product_name = $product['name'];
-                $product_price = $product['cost_per_hour'];
+                $product_price = $product['cost_per_month'];
                 break;
             case 'CPU':
                 $product = Cpu::find($values['product_id']);
                 $product_name = $product['datacenter'];
-                $product_price = $product['cost_per_hour'];
+                $product_price = $product['cost_per_month'];
                 break;
             case 'MEMORY':
                 $product = Memory::find($values['product_id']);
                 $product_name = $product['datacenter'];
-                $product_price = $product['cost_per_hour'];
+                $product_price = $product['cost_per_month'];
                 break;
             case 'STORAGE':
                 $product = Storage::find($values['product_id']);
                 $product_name = $product['datacenter'];
-                $product_price = $product['cost_per_gb_hour'];
+                $product_price = $product['cost_per_gb_month'];
                 break;
             case 'VPC':
                 $product = Vpc::find($values['product_id']);
                 $product_name = $product['datacenter'];
-                $product_price = $product['cost_per_hour'];
+                $product_price = $product['cost_per_month'];
                 break;
             case 'IPV4':
                 $product = Ipv4::find($values['product_id']);
                 $product_name = $product['datacenter'];
-                $product_price = $product['cost_per_hour'];
+                $product_price = $product['cost_per_month'];
                 break;
 
             default:

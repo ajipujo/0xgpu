@@ -11,15 +11,15 @@
                     @csrf
                     @method('PATCH')
                     <div class="w-full mb-3">
-                        <label className="label-text" for="datacenter">Datacenter</label>
+                        <label className="label-text" for="datacenter">Data center</label>
                         <input id="datacenter" name="datacenter" type="text" class="input input-bordered w-full mt-1"
                             required placeholder="Input datacenter" value="{{ $memory->datacenter }}">
                     </div>
                     <div class="w-full mb-3">
-                        <label className="label-text" for="cost_per_hour">Cost per Hour</label>
-                        <input id="cost_per_hour" name="cost_per_hour" type="text"
+                        <label className="label-text" for="cost_per_month">cost per month</label>
+                        <input id="cost_per_month" name="cost_per_month" type="text"
                             class="input input-bordered w-full mt-1" required placeholder="Input cost"
-                            value="{{ $memory->cost_per_hour }}">
+                            value="{{ $memory->cost_per_month }}">
                     </div>
                     <button class="btn btn-primary btn-block">Submit</button>
                 </form>

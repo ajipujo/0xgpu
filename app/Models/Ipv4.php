@@ -11,6 +11,6 @@ class Ipv4 extends Model
 
     protected $fillable = [
         'datacenter',
-        'cost_per_hour',
+        'cost_per_month',
     ];
 }

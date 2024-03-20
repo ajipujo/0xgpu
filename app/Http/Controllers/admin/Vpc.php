@@ -45,7 +45,7 @@ class Vpc extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -92,14 +92,14 @@ class Vpc extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
         $vpc = ModelsVpc::find($id);
 
         $vpc->datacenter = $values['datacenter'];
-        $vpc->cost_per_hour = $values['cost_per_hour'];
+        $vpc->cost_per_month = $values['cost_per_month'];
         $vpc->save();
 
         Alert::success('Hore!', 'VPC updated Successfully');

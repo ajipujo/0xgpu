@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cpus', function (Blueprint $table) {
             $table->id();
             $table->string('datacenter');
-            $table->string('cost_per_hour');
+            $table->string('cost_per_month');
             $table->timestamps();
             $table->softDeletes();
         });
