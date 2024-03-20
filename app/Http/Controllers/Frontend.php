@@ -6,10 +6,8 @@ use App\Models\Cpu;
 use App\Models\Gpu;
 use App\Models\Ipv4;
 use App\Models\Memory;
-use App\Models\Product;
 use App\Models\Storage;
 use App\Models\Vpc;
-use Illuminate\Http\Request;
 
 class Frontend extends Controller
 {
