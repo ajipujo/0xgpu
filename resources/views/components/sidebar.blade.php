@@ -75,38 +75,38 @@
                     <span class="ml-2">Home</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.gpu' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.gpu') }}">
                     <i class="fa-solid fa-hard-drive text-lg"></i>
                     <span class="ml-2">GPU's</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.cpu' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.cpu') }}">
                     <i class="fa-solid fa-microchip text-lg"></i>
                     <span class="ml-2">Virtual CPU's</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.memory' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.memory') }}">
                     <i class="fa-solid fa-memory text-lg"></i>
                     <span class="ml-2">Memory</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.storage' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.storage') }}">
                     <i class="fa-solid fa-database text-lg"></i>
                     <span class="ml-2">Storage Disks</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.vpc' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.vpc') }}">
                     <i class="fa-solid fa-globe text-lg"></i>
                     <span class="ml-2">Private networks (VPC)</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a>
+            <li class="{{ Route::currentRouteName() == 'frontend.ipv4' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('frontend.ipv4') }}">
                     <i class="fa-solid fa-circle-nodes text-lg"></i>
                     <span class="ml-2">IPv4 addresses</span>
                 </a>

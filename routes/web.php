@@ -28,6 +28,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Frontend::class, 'index'])->name('frontend.home');
+Route::get('/gpu', [Frontend::class, 'gpu_home'])->name('frontend.gpu');
+Route::get('/cpu', [Frontend::class, 'cpu_home'])->name('frontend.cpu');
+Route::get('/memory', [Frontend::class, 'memory_home'])->name('frontend.memory');
+Route::get('/storage', [Frontend::class, 'storage_home'])->name('frontend.storage');
+Route::get('/vpc', [Frontend::class, 'vpc_home'])->name('frontend.vpc');
+Route::get('/ipv4', [Frontend::class, 'ipv4_home'])->name('frontend.ipv4');
+
 Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
 Route::get('/cloud/{cloud}', [AiCloud::class, 'show'])->name('frontend.cloud');
 Route::post('/cloud/{cloud}/transaction', [AiCloud::class, 'create_transaction'])->name('frontend.cloud.transaction');
