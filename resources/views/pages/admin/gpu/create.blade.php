@@ -46,8 +46,8 @@
                                 class="input input-bordered w-full mt-1" required placeholder="Input value">
                         </div>
                         <div class="w-full mb-3">
-                            <label className="label-text" for="price_per_hour">Price</label>
-                            <input id="price_per_hour" name="price_per_hour" type="text"
+                            <label className="label-text" for="cost_per_month">Price</label>
+                            <input id="cost_per_month" name="cost_per_month" type="text"
                                 class="input input-bordered w-full mt-1" required placeholder="Input price">
                         </div>
                         <button class="btn btn-primary btn-block">Submit</button>

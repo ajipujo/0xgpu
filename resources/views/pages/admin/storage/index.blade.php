@@ -15,7 +15,7 @@
                             <div class="font-semibold">{{ $storage->datacenter }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">cost per month</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
                             <div class="font-semibold">{{ $storage->cost_per_gb_month }} ETH</div>
                         </div>
                         <div class="flex items-center space-x-2">

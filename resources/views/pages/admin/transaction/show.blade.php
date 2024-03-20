@@ -21,8 +21,8 @@
                                 <div class="font-semibold">{{ $product->form_factor }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
-                                <div class="font-semibold">{{ $product->price_per_hour }} ETH</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
+                                <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                             <div>
                                 <div class="text-[#606a74]">Max vCPUs per GPU</div>
@@ -46,7 +46,7 @@
                                 <div class="font-semibold">{{ $product->datacenter }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
                                 <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <div class="font-semibold">{{ $product->datacenter }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
                                 <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <div class="font-semibold">{{ $product->datacenter }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
                                 <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                 <div class="font-semibold">{{ $product->datacenter }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
                                 <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                                 <div class="font-semibold">{{ $product->datacenter }}</div>
                             </div>
                             <div>
-                                <div class="text-[#606a74]">Price per Hour</div>
+                                <div class="text-[#606a74]">Cost per Month</div>
                                 <div class="font-semibold">{{ $product->cost_per_month }} ETH</div>
                             </div>
                         </div>

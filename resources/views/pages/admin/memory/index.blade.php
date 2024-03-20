@@ -15,7 +15,7 @@
                             <div class="font-semibold">{{ $memory->datacenter }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">cost per month</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
                             <div class="font-semibold">{{ $memory->cost_per_month }} ETH</div>
                         </div>
                         <div class="flex items-center space-x-2">

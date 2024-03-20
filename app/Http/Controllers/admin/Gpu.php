@@ -51,7 +51,7 @@ class Gpu extends Controller
             'form_factor' => 'required',
             'max_cpu_per_gpu' => 'required',
             'max_memory_per_gpu' => 'required',
-            'price_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -105,7 +105,7 @@ class Gpu extends Controller
             'form_factor' => 'required',
             'max_cpu_per_gpu' => 'required',
             'max_memory_per_gpu' => 'required',
-            'price_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -118,7 +118,7 @@ class Gpu extends Controller
         $gpu->form_factor = $values['form_factor'];
         $gpu->max_cpu_per_gpu = $values['max_cpu_per_gpu'];
         $gpu->max_memory_per_gpu = $values['max_memory_per_gpu'];
-        $gpu->price_per_hour = $values['price_per_hour'];
+        $gpu->cost_per_month = $values['cost_per_month'];
 
         $gpu->save();
 

@@ -16,7 +16,7 @@
                             required placeholder="Input datacenter" value="{{ $cpu->datacenter }}">
                     </div>
                     <div class="w-full mb-3">
-                        <label className="label-text" for="cost_per_month">cost per month</label>
+                        <label className="label-text" for="cost_per_month">Cost per Month</label>
                         <input id="cost_per_month" name="cost_per_month" type="text"
                             class="input input-bordered w-full mt-1" required placeholder="Input cost"
                             value="{{ $cpu->cost_per_month }}">
