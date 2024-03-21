@@ -49,9 +49,6 @@ class Vpc extends Controller
         ]);
 
         $values = $request->all();
-
-        dd($values);
-
         unset($values['_token']);
         ModelsVpc::create($values);
         Alert::success('Hore!', 'VPC Created Successfully');
