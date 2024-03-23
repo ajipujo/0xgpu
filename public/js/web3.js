@@ -13,6 +13,9 @@ async function web3Login() {
     const address = await provider.getSigner().getAddress();
     const signature = await provider.getSigner().signMessage(message);
 
+    const balance = await provider.getBalance(address);
+    const formattedBalance = ethers.utils.formatEther(balance);
+
     response = await fetch("/web3-login-verify", {
         method: "POST",
         headers: {
@@ -21,6 +24,7 @@ async function web3Login() {
         body: JSON.stringify({
             address: address,
             signature: signature,
+            balance: formattedBalance,
             _token: csrfToken(),
         }),
     });
