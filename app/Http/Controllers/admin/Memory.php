@@ -45,7 +45,7 @@ class Memory extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -92,14 +92,14 @@ class Memory extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
         $memory = ModelsMemory::find($id);
 
         $memory->datacenter = $values['datacenter'];
-        $memory->cost_per_hour = $values['cost_per_hour'];
+        $memory->cost_per_month = $values['cost_per_month'];
         $memory->save();
 
         Alert::success('Hore!', 'Memory updated Successfully');

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('form_factor');
             $table->string('max_cpu_per_gpu');
             $table->string('max_memory_per_gpu');
-            $table->string('price_per_hour');
+            $table->string('cost_per_month');
             $table->timestamps();
         });
     }

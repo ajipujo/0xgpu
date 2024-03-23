@@ -15,8 +15,8 @@
                             <div class="font-semibold">{{ $storage->datacenter }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">Cost per Hour</div>
-                            <div class="font-semibold">{{ $storage->cost_per_gb_hour }} ETH</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
+                            <div class="font-semibold">{{ $storage->cost_per_gb_month }} ETH</div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <a href="{{ route('storage.edit', ['storage' => $storage->id]) }}"

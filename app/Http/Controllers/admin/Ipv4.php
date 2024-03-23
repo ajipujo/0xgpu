@@ -45,7 +45,7 @@ class Ipv4 extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -92,14 +92,14 @@ class Ipv4 extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
         $ipv4 = ModelsIpv4::find($id);
 
         $ipv4->datacenter = $values['datacenter'];
-        $ipv4->cost_per_hour = $values['cost_per_hour'];
+        $ipv4->cost_per_month = $values['cost_per_month'];
         $ipv4->save();
 
         Alert::success('Hore!', 'IPv4 updated Successfully');

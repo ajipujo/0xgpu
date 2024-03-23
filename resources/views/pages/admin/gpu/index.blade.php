@@ -31,8 +31,8 @@
                             <div class="font-semibold">{{ $gpu->max_memory_per_gpu }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">Price per Hour</div>
-                            <div class="font-semibold">{{ $gpu->price_per_hour }} ETH</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
+                            <div class="font-semibold">{{ $gpu->cost_per_month }} ETH</div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <a href="{{ route('gpu.edit', ['gpu' => $gpu->id]) }}" class="btn btn-primary btn-sm">

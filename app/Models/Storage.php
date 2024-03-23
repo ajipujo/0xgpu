@@ -11,6 +11,6 @@ class Storage extends Model
 
     protected $fillable = [
         'datacenter',
-        'cost_per_gb_hour',
+        'cost_per_gb_month',
     ];
 }

@@ -45,7 +45,7 @@ class Cpu extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -92,14 +92,14 @@ class Cpu extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_hour' => 'required',
+            'cost_per_month' => 'required',
         ]);
 
         $values = $request->all();
         $cpu = ModelsCpu::find($id);
 
         $cpu->datacenter = $values['datacenter'];
-        $cpu->cost_per_hour = $values['cost_per_hour'];
+        $cpu->cost_per_month = $values['cost_per_month'];
         $cpu->save();
 
         Alert::success('Hore!', 'CPU updated Successfully');

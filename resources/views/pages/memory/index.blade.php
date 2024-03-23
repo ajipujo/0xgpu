@@ -17,19 +17,19 @@
                             <div class="font-semibold">{{ $memory->datacenter }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">Cost per Hour</div>
-                            <div class="font-semibold">{{ $memory->cost_per_hour }} ETH</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
+                            <div class="font-semibold">{{ $memory->cost_per_month }} ETH</div>
                         </div>
                         <div>
                             @if (Auth::user() && Auth::user()->role == 'Guest')
-                            <form action="{{ route('transaction.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $memory->id }}">
-                                <input type="hidden" name="product_type" value="MEMORY">
-                                <button class="btn btn-primary btn-sm" type="submit">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </form>
+                                <form action="{{ route('transaction.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $memory->id }}">
+                                    <input type="hidden" name="product_type" value="MEMORY">
+                                    <button class="btn btn-primary btn-sm" type="submit">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+                                </form>
                             @endif
                             @if (!Auth::user())
                                 <button class="btn btn-primary btn-sm" onclick="web3Login()">

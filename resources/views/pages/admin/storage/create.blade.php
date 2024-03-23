@@ -10,13 +10,13 @@
                 <form action="{{ route('storage.store') }}" method="POST">
                     @csrf
                     <div class="w-full mb-3">
-                        <label className="label-text" for="datacenter">Datacenter</label>
+                        <label className="label-text" for="datacenter">Data center</label>
                         <input id="datacenter" name="datacenter" type="text" class="input input-bordered w-full mt-1"
                             required placeholder="Input datacenter">
                     </div>
                     <div class="w-full mb-3">
-                        <label className="label-text" for="cost_per_gb_hour">Cost per Hour</label>
-                        <input id="cost_per_gb_hour" name="cost_per_gb_hour" type="text"
+                        <label className="label-text" for="cost_per_gb_month">Cost per Month</label>
+                        <input id="cost_per_gb_month" name="cost_per_gb_month" type="text"
                             class="input input-bordered w-full mt-1" required placeholder="Input cost">
                     </div>
                     <button class="btn btn-primary btn-block">Submit</button>

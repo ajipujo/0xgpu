@@ -15,8 +15,8 @@
                             <div class="font-semibold">{{ $memory->datacenter }}</div>
                         </div>
                         <div>
-                            <div class="text-[#606a74]">Cost per Hour</div>
-                            <div class="font-semibold">{{ $memory->cost_per_hour }} ETH</div>
+                            <div class="text-[#606a74]">Cost per Month</div>
+                            <div class="font-semibold">{{ $memory->cost_per_month }} ETH</div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <a href="{{ route('memory.edit', ['memory' => $memory->id]) }}" class="btn btn-primary btn-sm">

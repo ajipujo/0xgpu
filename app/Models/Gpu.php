@@ -17,6 +17,6 @@ class Gpu extends Model
         'form_factor',
         'max_cpu_per_gpu',
         'max_memory_per_gpu',
-        'price_per_hour'
+        'cost_per_month'
     ];
 }

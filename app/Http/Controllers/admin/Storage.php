@@ -45,7 +45,7 @@ class Storage extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_gb_hour' => 'required',
+            'cost_per_gb_month' => 'required',
         ]);
 
         $values = $request->all();
@@ -93,14 +93,14 @@ class Storage extends Controller
     {
         $request->validate([
             'datacenter' => 'required',
-            'cost_per_gb_hour' => 'required',
+            'cost_per_gb_month' => 'required',
         ]);
 
         $values = $request->all();
         $storage = ModelsStorage::find($id);
 
         $storage->datacenter = $values['datacenter'];
-        $storage->cost_per_gb_hour = $values['cost_per_gb_hour'];
+        $storage->cost_per_gb_month = $values['cost_per_gb_month'];
         $storage->save();
 
         Alert::success('Hore!', 'Storage updated Successfully');
