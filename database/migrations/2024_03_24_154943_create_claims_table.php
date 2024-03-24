@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('claims', function (Blueprint $table) {
             $table->id();
+            $table->string('value');
+            $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['Process', 'Completed', 'Reject']);
+            $table->longText('notes')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -26,6 +32,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('claims');
+        Schema::dropIfExists('claims', function (Blueprint $table) {
+            $table->dropForeign('claims_user_id_foreign');
+        });
     }
 };

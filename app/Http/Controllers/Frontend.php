@@ -8,6 +8,10 @@ use App\Models\Ipv4;
 use App\Models\Memory;
 use App\Models\Storage;
 use App\Models\Vpc;
+use App\Models\Claim;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Frontend extends Controller
 {
@@ -70,5 +74,21 @@ class Frontend extends Controller
         $ipv4s = Ipv4::paginate(10);
 
         return view('pages.ipv4.index', compact('title', 'ipv4s'));
+    }
+
+    public function claim(Request $request) {
+        $data = $request->all();
+
+        $user_id = Auth::user()->id;
+        $value = $data['value'];
+
+        Claim::create([
+            'value' => $value,
+            'user_id' => $user_id,
+            'status' => 'Process'
+        ]);
+
+        Alert::success('Hore!', 'Claim Request Created Successfully');
+        return redirect()->back();
     }
 }

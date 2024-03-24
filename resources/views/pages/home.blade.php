@@ -1,30 +1,36 @@
 @extends('layouts.master')
 
 @section('content')
-    <dialog id="modal_claim" class="modal">
-    <div class="modal-box">
-        <h3 class="font-bold text-lg">Hello!</h3>
-        <p class="py-4">Press ESC key or click the button below to close</p>
-        <div class="modal-action">
-        <form method="dialog">
-            <!-- if there is a button in form, it will close the modal -->
-            <button class="btn">Close</button>
-        </form>
-        </div>
-    </div>
-    </dialog>
-    <div class="w-full mb-[20px]">
-        <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
-            <div class="card-body">
-                <div class="w-full flex justify-between items-center">
-                    <div class="text-xl font-semibold">Revenue Share</div>
-                    <div>
-                        <button class="btn btn-primary" onclick="modal_claim.showModal()">Claim Now</button>
+    @if (Auth::user() && Auth::user()->role == 'Guest')
+        <dialog id="modal_claim" class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-lg">Claim Revenue</h3>
+                <div class="py-4">
+                    <form action="{{ route('frontend.claim') }}" method="POST">
+                        @csrf
+                        <input name="value" type="hidden" value="15000">
+                        <div class="w-full flex justify-between items-center mb-4">
+                            <span>Balance</span>
+                            <span>15.000 ETH</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Claim</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+        <div class="w-full mb-[20px]">
+            <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
+                <div class="card-body">
+                    <div class="w-full flex justify-between items-center">
+                        <div class="text-xl font-semibold">Revenue Share</div>
+                        <div>
+                            <button class="btn btn-primary" onclick="modal_claim.showModal()">Claim Now</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <div class="w-full grid xs:grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
             <div class="card-body">

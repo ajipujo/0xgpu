@@ -8,6 +8,9 @@
         @foreach ($transactions as $transaction)
             <dialog id="modal_accept_{{ $transaction->id }}" class="modal">
                 <div class="modal-box">
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
                     <form action="{{ route('dashboard.transaction.accept', ['transaction' => $transaction->id]) }}"
                         method="POST">
                         @csrf
@@ -15,16 +18,16 @@
                         <h3 class="font-bold text-lg mb-5">Approve Order</h3>
                         <textarea name="content" id="richeditor"></textarea>
                         <div class="modal-action">
-                            <div class="w-full flex justify-end space-x-2">
-                                <button class="btn">Close</button>
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
             </dialog>
             <dialog id="modal_reject_{{ $transaction->id }}" class="modal">
                 <div class="modal-box">
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
                     <form action="{{ route('dashboard.transaction.reject', ['transaction' => $transaction->id]) }}"
                         method="POST">
                         @csrf
@@ -33,10 +36,7 @@
                         {{-- <p class="py-4">Press ESC key or click the button below to close</p> --}}
                         <textarea name="content" id="richeditor"></textarea>
                         <div class="modal-action">
-                            <div class="w-full flex justify-end space-x-2">
-                                <button class="btn">Close</button>
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>

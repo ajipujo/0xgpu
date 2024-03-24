@@ -36,6 +36,8 @@ Route::get('/storage', [Frontend::class, 'storage_home'])->name('frontend.storag
 Route::get('/vpc', [Frontend::class, 'vpc_home'])->name('frontend.vpc');
 Route::get('/ipv4', [Frontend::class, 'ipv4_home'])->name('frontend.ipv4');
 
+Route::post('/claim', [Frontend::class, 'claim'])->name('frontend.claim');
+
 Route::get('/clouds', [AiCloud::class, 'index'])->name('frontend.clouds');
 Route::get('/cloud/{cloud}', [AiCloud::class, 'show'])->name('frontend.cloud');
 Route::post('/cloud/{cloud}/transaction', [AiCloud::class, 'create_transaction'])->name('frontend.cloud.transaction');
