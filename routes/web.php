@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AiCloud as AdminAiCloud;
+use App\Http\Controllers\admin\Claim;
 use App\Http\Controllers\admin\Cpu;
 use App\Http\Controllers\admin\Transaction as AdminTransaction;
 use App\Http\Controllers\admin\Dashboard;
@@ -60,6 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function() {
     Route::resource('/storage', Storage::class);
     Route::resource('/ipv4', Ipv4::class);
     Route::resource('/vpc', Vpc::class);
+    Route::resource('/claim', Claim::class);
 
     // Transactions - Cloud
     Route::resource('/clouds', AdminAiCloud::class);

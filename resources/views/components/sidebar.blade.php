@@ -68,6 +68,13 @@
                     <span class="ml-2">Transactions</span>
                 </a>
             </li>
+            <li
+                class="{{ in_array(Route::currentRouteName(), ['claim.index']) ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
+                <a href="{{ route('claim.index') }}">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span class="ml-2">Claim Request</span>
+                </a>
+            </li>
         @else
             <li class="{{ Route::currentRouteName() == 'frontend.home' ? 'bg-[#282C32] rounded-md' : '' }} mb-2">
                 <a href="{{ route('frontend.home') }}">
