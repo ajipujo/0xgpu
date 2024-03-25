@@ -25,7 +25,13 @@ class Frontend extends Controller
         $vpc_length = Vpc::all()->count();
         $ipv4_length = Ipv4::all()->count();
 
-        return view('pages.home', compact('title', 'gpu_length', 'cpu_length', 'memory_length', 'storage_length', 'vpc_length', 'ipv4_length'));
+        $claims = [];
+
+        if (Auth::user()) {
+            $claims = Claim::where('user_id', Auth::user()->id)->get();
+        }
+
+        return view('pages.home', compact('title', 'gpu_length', 'cpu_length', 'memory_length', 'storage_length', 'vpc_length', 'ipv4_length', 'claims'));
     }
 
     public function gpu_home() {

@@ -44,9 +44,15 @@
             <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
                 <div class="card-body">
                     <div class="flex justify-between items-center">
-                        <div class="flex space-x-2">
-                            <span class="text-[#606a74]">Wallet Address:</span>
-                            <span>{{ $claim->customer->eth_address }}</span>
+                        <div>
+                            <div class="flex space-x-2">
+                                <span class="text-[#606a74]">Wallet Address:</span>
+                                <span>{{ $claim->customer->eth_address }}</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="text-[#606a74]">Revenue:</span>
+                                <span>{{ $claim->value }} ETH</span>
+                            </div>
                         </div>
                         <div>
                             <span class="text-[#606a74]">Status:</span>
