@@ -6,7 +6,7 @@
             <div class="modal-box">
                 <h3 class="font-bold text-lg">Claim Revenue</h3>
                 <div class="py-4">
-                    <form action="{{ route('frontend.claim') }}" method="POST">
+                    <form action="{{ route('frontend.claim') }}" method="POST" id="formClaim">
                         @csrf
                         <input name="value" id="value" type="hidden" value="0">
                         <div class="w-full flex justify-between items-center mb-4">
@@ -36,7 +36,9 @@
                     <div class="w-full flex justify-between items-center {{ count($claims) > 0 ? 'mb-3' : '' }}">
                         <div class="text-xl font-semibold">Revenue Share</div>
                         <div>
-                            <button class="btn btn-primary" onclick="modal_claim.showModal()">Claim Now</button>
+                            @if (!$last_claim)
+                                <button class="btn btn-primary" onclick="modal_claim.showModal()">Claim Now</button>
+                            @endif
                         </div>
                     </div>
                     @if (count($claims) > 0)
@@ -163,208 +165,228 @@
 @if (Auth::user() && Auth::user()->role == 'Guest')
     @section('script')
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                async function GetBalance() {
-                    const user = <?php echo json_encode(Auth::user()); ?>;
+            const user = <?php echo json_encode(Auth::user()); ?>;
+            const ERC20ABI = [{
+                    "constant": true,
+                    "inputs": [],
+                    "name": "name",
+                    "outputs": [{
+                        "name": "",
+                        "type": "string"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [{
+                            "name": "_spender",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "approve",
+                    "outputs": [{
+                        "name": "",
+                        "type": "bool"
+                    }],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "totalSupply",
+                    "outputs": [{
+                        "name": "",
+                        "type": "uint256"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [{
+                            "name": "_from",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "transferFrom",
+                    "outputs": [{
+                        "name": "",
+                        "type": "bool"
+                    }],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "decimals",
+                    "outputs": [{
+                        "name": "",
+                        "type": "uint8"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [{
+                        "name": "_owner",
+                        "type": "address"
+                    }],
+                    "name": "balanceOf",
+                    "outputs": [{
+                        "name": "balance",
+                        "type": "uint256"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "symbol",
+                    "outputs": [{
+                        "name": "",
+                        "type": "string"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [{
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "transfer",
+                    "outputs": [{
+                        "name": "",
+                        "type": "bool"
+                    }],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [{
+                            "name": "_owner",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_spender",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "allowance",
+                    "outputs": [{
+                        "name": "",
+                        "type": "uint256"
+                    }],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "payable": true,
+                    "stateMutability": "payable",
+                    "type": "fallback"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [{
+                            "indexed": true,
+                            "name": "owner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "spender",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Approval",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [{
+                            "indexed": true,
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "to",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Transfer",
+                    "type": "event"
+                }
+            ];
 
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('formClaim');
+
+                form.addEventListener('submit', async function(event) {
+                    // Prevent the default form submission
+                    event.preventDefault();
+
+                    // Your custom code here, e.g., validation, sending data via AJAX, etc.
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+                    const DAI_ADDRESS = "0x486D95c40FEba650c38E98Cd9d7979D9cD88CeA0";
+
+                    const DAI = new ethers.Contract(DAI_ADDRESS, ERC20ABI, provider);
+                    const DAIBalance = await DAI.balanceOf(user.eth_address);
+
+                    const formattedBalance = ethers.utils.formatEther(DAIBalance);
+                    document.getElementById("value").value = formattedBalance;
+
+                    // You can optionally submit the form programmatically here if needed
+                    form.submit();
+                });
+
+                async function GetBalance() {
                     document.getElementById("btnSubmit1").classList.add("hidden");
                     document.getElementById("btnSubmit2").classList.add("hidden");
-
-                    const ERC20ABI = [{
-                            "constant": true,
-                            "inputs": [],
-                            "name": "name",
-                            "outputs": [{
-                                "name": "",
-                                "type": "string"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [{
-                                    "name": "_spender",
-                                    "type": "address"
-                                },
-                                {
-                                    "name": "_value",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "approve",
-                            "outputs": [{
-                                "name": "",
-                                "type": "bool"
-                            }],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "totalSupply",
-                            "outputs": [{
-                                "name": "",
-                                "type": "uint256"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [{
-                                    "name": "_from",
-                                    "type": "address"
-                                },
-                                {
-                                    "name": "_to",
-                                    "type": "address"
-                                },
-                                {
-                                    "name": "_value",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "transferFrom",
-                            "outputs": [{
-                                "name": "",
-                                "type": "bool"
-                            }],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "decimals",
-                            "outputs": [{
-                                "name": "",
-                                "type": "uint8"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [{
-                                "name": "_owner",
-                                "type": "address"
-                            }],
-                            "name": "balanceOf",
-                            "outputs": [{
-                                "name": "balance",
-                                "type": "uint256"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [],
-                            "name": "symbol",
-                            "outputs": [{
-                                "name": "",
-                                "type": "string"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "constant": false,
-                            "inputs": [{
-                                    "name": "_to",
-                                    "type": "address"
-                                },
-                                {
-                                    "name": "_value",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "transfer",
-                            "outputs": [{
-                                "name": "",
-                                "type": "bool"
-                            }],
-                            "payable": false,
-                            "stateMutability": "nonpayable",
-                            "type": "function"
-                        },
-                        {
-                            "constant": true,
-                            "inputs": [{
-                                    "name": "_owner",
-                                    "type": "address"
-                                },
-                                {
-                                    "name": "_spender",
-                                    "type": "address"
-                                }
-                            ],
-                            "name": "allowance",
-                            "outputs": [{
-                                "name": "",
-                                "type": "uint256"
-                            }],
-                            "payable": false,
-                            "stateMutability": "view",
-                            "type": "function"
-                        },
-                        {
-                            "payable": true,
-                            "stateMutability": "payable",
-                            "type": "fallback"
-                        },
-                        {
-                            "anonymous": false,
-                            "inputs": [{
-                                    "indexed": true,
-                                    "name": "owner",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": true,
-                                    "name": "spender",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": false,
-                                    "name": "value",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "Approval",
-                            "type": "event"
-                        },
-                        {
-                            "anonymous": false,
-                            "inputs": [{
-                                    "indexed": true,
-                                    "name": "from",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": true,
-                                    "name": "to",
-                                    "type": "address"
-                                },
-                                {
-                                    "indexed": false,
-                                    "name": "value",
-                                    "type": "uint256"
-                                }
-                            ],
-                            "name": "Transfer",
-                            "type": "event"
-                        }
-                    ];
 
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -372,7 +394,6 @@
 
                     const DAI = new ethers.Contract(DAI_ADDRESS, ERC20ABI, provider);
                     const DAIBalance = await DAI.balanceOf(user.eth_address);
-                    // const DAIBalance = await DAI.balanceOf("0xE00E23c676f8a3C657c91dde36b79393a176Bba6");
 
                     const formattedBalance = ethers.utils.formatEther(DAIBalance);
 
@@ -393,8 +414,6 @@
 
                     if (revenue == 0) {
                         document.getElementById("btnSubmit2").classList.remove("hidden");
-                    } else {
-                        document.getElementById("value").value = revenue;
                     }
 
                     document.getElementById('balanceToken').innerHTML = Number(formattedBalance).toFixed(2);

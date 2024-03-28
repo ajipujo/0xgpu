@@ -28,5 +28,18 @@
                 </div>
             </div>
         </div>
+        <div class="card card-compact w-full bg-base-100 border border-[#252C33] shadow-xl">
+            <div class="card-body">
+                <div class="w-full flex space-x-4">
+                    <div>
+                        <i class="fa-solid fa-hand-holding-dollar text-[40px]"></i>
+                    </div>
+                    <div>
+                        <div class="w-full font-bold text-[18px]">Revenue Shared</div>
+                        <div class="text-[#606a74]">{{ $claims }} ETH</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

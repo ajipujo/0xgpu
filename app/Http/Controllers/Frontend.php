@@ -9,6 +9,7 @@ use App\Models\Memory;
 use App\Models\Storage;
 use App\Models\Vpc;
 use App\Models\Claim;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,12 +27,17 @@ class Frontend extends Controller
         $ipv4_length = Ipv4::all()->count();
 
         $claims = [];
+        $last_claim = null;
 
         if (Auth::user()) {
+            $startOfWeek = Carbon::now()->startOfWeek();
+            $endOfWeek = Carbon::now()->endOfWeek();
+
             $claims = Claim::where('user_id', Auth::user()->id)->get();
+            $last_claim = Claim::where('user_id', Auth::user()->id)->whereIn('status', ['Process', 'Completed'])->whereBetween('created_at', [$startOfWeek, $endOfWeek])->orderBy('id', 'desc')->first();
         }
 
-        return view('pages.home', compact('title', 'gpu_length', 'cpu_length', 'memory_length', 'storage_length', 'vpc_length', 'ipv4_length', 'claims'));
+        return view('pages.home', compact('title', 'gpu_length', 'cpu_length', 'memory_length', 'storage_length', 'vpc_length', 'ipv4_length', 'claims', 'last_claim'));
     }
 
     public function gpu_home() {
@@ -88,8 +94,23 @@ class Frontend extends Controller
         $user_id = Auth::user()->id;
         $value = $data['value'];
 
+        $revenue = 0;
+
+        if ($value >= 100000.1) {
+            $revenue = '0.05';
+        }
+
+        if ($value >= 50000.1 && $value < 100000.1) {
+            $revenue = '0.025';
+        }
+
+        if ($revenue === 0) {
+            Alert::error('Oh No!', 'Something went wrong');
+            return redirect()->back();
+        }
+
         Claim::create([
-            'value' => $value,
+            'value' => $revenue,
             'user_id' => $user_id,
             'status' => 'Process'
         ]);
